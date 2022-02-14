@@ -57,18 +57,14 @@ let _ =
   let t_y = ref 250 in
   let t_x1 = ref 250 in
   let t_y1 = ref 240 in
-
-	let t_x2 = ref 247 in
-	let t_y2 = ref 240 in 
-
-	let t_x3 = ref 253 in
-	let t_y3 = ref 240 in
-
-	let t_x4 = ref 247 in
-	let t_y4 = ref 230 in
-
-	let t_x5 = ref 253 in
-	let t_y5 = ref 230 in
+  let t_x2 = ref 247 in
+  let t_y2 = ref 240 in 
+  let t_x3 = ref 253 in
+  let t_y3 = ref 240 in
+  let t_x4 = ref 247 in
+  let t_y4 = ref 230 in
+  let t_x5 = ref 253 in
+  let t_y5 = ref 230 in
 
  
   let running = ref true in
