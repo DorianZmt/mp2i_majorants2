@@ -47,6 +47,12 @@ let avance dir x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6=
         y6 := !y6 - 2;
       end
 
+let saut saut_H_bool saut_H_int saut_B_bool =
+  if !saut_H_bool = false && !saut_B_bool = false
+    then begin
+      saut_H_bool := true;
+      saut_H_int := 25
+    end
 
 let _ =
   open_graph " 500x500";
@@ -54,41 +60,70 @@ let _ =
   (*let bmp = Bmp.load "civ.bmp"[] in*)
   let frame = ref 0 in
   let t_x = ref 250 in
-  let t_y = ref 250 in
+  let t_y = ref 237 in
   let t_x1 = ref 250 in
-  let t_y1 = ref 240 in
+  let t_y1 = ref 227 in
 
 	let t_x2 = ref 247 in
-	let t_y2 = ref 240 in 
+	let t_y2 = ref 227 in 
 
 	let t_x3 = ref 253 in
-	let t_y3 = ref 240 in
+	let t_y3 = ref 227 in
 
 	let t_x4 = ref 247 in
-	let t_y4 = ref 230 in
+	let t_y4 = ref 217 in
 
 	let t_x5 = ref 253 in
-	let t_y5 = ref 230 in
+	let t_y5 = ref 217 in
 
  
   let running = ref true in
 
   (* on va viser les 60 images secondes *)
-  let minimal_frame_time = 1.0 /. 60. in
   (* on supprime la synchronisation automatique de l'écran avec le tampon *)
   auto_synchronize false;
 
   let pages = ref 1 in
+
+  let saut_H_int = ref 0 in
+  let saut_H_bool = ref false in
+
+  let saut_B_int = ref 0 in
+  let saut_B_bool = ref false in
   while !running do
     clear_graph ();
-    let start_time = Sys.time () in
     incr frame;
+
+    if !saut_H_bool = true 
+      then begin
+        if !saut_H_int = 0 
+          then begin
+            saut_H_bool := false;
+            saut_B_bool := true;
+            saut_B_int := 25;
+          end
+          else begin
+            avance Haut t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5;
+            saut_H_int := !saut_H_int - 1
+          end
+      end
+      else if !saut_B_bool = true
+        then begin
+          if !saut_B_int = 0
+            then begin 
+              saut_B_bool := false;
+            end
+            else begin
+              avance Bas t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5;
+              saut_B_int := !saut_B_int - 1
+            end
+        end;
         
     if !pages = 1
       then begin
         clear_graph ();
         set_color black;
-        moveto 100 250;
+        moveto 150 250;
         draw_string "Appuyez sur A pour commencer la partie";
         if key_pressed()
         then begin
@@ -186,7 +221,7 @@ let _ =
             | 'a' -> running := false
             | 'q' -> avance Gauche t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
             | 'd' -> avance Droite t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
-            | 'z' -> avance Haut t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
+            | 'z' -> saut saut_H_bool saut_H_int saut_B_bool
             | 's' -> avance Bas t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
             | _ -> ()
           in
@@ -203,9 +238,6 @@ let _ =
           (* on rafraichit l'écran *)
           synchronize ();
           (* Une attente active si on va trop vite *)
-          let t = Sys.time () in
-          let dt = start_time +. minimal_frame_time -. t in
-          if dt > 0.
-          then Unix.sleepf dt
+          Unix.sleepf 0.02
         end;
   done
