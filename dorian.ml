@@ -57,14 +57,18 @@ let _ =
   let t_y = ref 250 in
   let t_x1 = ref 250 in
   let t_y1 = ref 240 in
-  let t_x2 = ref 247 in
-  let t_y2 = ref 240 in 
-  let t_x3 = ref 253 in
-  let t_y3 = ref 240 in
-  let t_x4 = ref 247 in
-  let t_y4 = ref 230 in
-  let t_x5 = ref 253 in
-  let t_y5 = ref 230 in
+
+	let t_x2 = ref 247 in
+	let t_y2 = ref 240 in 
+
+	let t_x3 = ref 253 in
+	let t_y3 = ref 240 in
+
+	let t_x4 = ref 247 in
+	let t_y4 = ref 230 in
+
+	let t_x5 = ref 253 in
+	let t_y5 = ref 230 in
 
  
   let running = ref true in
@@ -76,6 +80,7 @@ let _ =
 
   let pages = ref 1 in
   while !running do
+    clear_graph ();
     let start_time = Sys.time () in
     incr frame;
         
@@ -83,38 +88,17 @@ let _ =
       then begin
         clear_graph ();
         set_color black;
-        moveto 150 250;
-        draw_string "aaaaa";
+        moveto 100 250;
+        draw_string "Appuyez sur A pour commencer la partie";
         if key_pressed()
         then begin
           match read_key () with
           | 'a' -> pages := 2;
           | _ -> ()
         end;
-        let t = Sys.time () in
-        let dt = start_time +. minimal_frame_time -. t in
-        if dt > 0.
-          then Unix.sleepf dt
+        Unix.sleepf 0.05
       end
-      else 
-      if !pages = 2 
-        then begin
-          clear_graph ();
-          set_color black;
-          moveto 250 250;
-          draw_string "Bonjour";
-          if key_pressed()
-          then begin
-            match read_key () with
-            | 'b' -> pages := 3;
-            | _ -> ()
-          end;
-          let t = Sys.time () in
-          let dt = start_time +. minimal_frame_time -. t in
-          if dt > 0.
-            then Unix.sleepf dt
-          end
-        else begin
+      else begin
           clear_graph ();
           set_color black;
         	moveto !t_x !t_y;
@@ -136,16 +120,20 @@ let _ =
             if !pos = 0
               then begin
                 moveto 0 !a;
-                for i = 1 to 20 do
+                let loop = ref 1 in
+                while !loop < 70 do
                   draw_string "°";
+                  incr loop;
                 done;
                 a := !a - 10;
                 pos := 1;
               end
               else begin      
                 moveto 10 !a;
-                for i = 1 to 20 do
+                let loop = ref 1 in
+                while !loop < 70 do
                   draw_string "°";
+                  incr loop;
                 done;
                 a := !a - 10;
                 pos := 0;
@@ -153,12 +141,16 @@ let _ =
           done;
 
           moveto 0 220;
-          for loop = 1 to 20 do
+          let loop01 = ref 1 in
+          while !loop01 < 70 do
             draw_string "_";
+            incr loop01;
           done;
           moveto 0 380;
-          for loop = 1 to 20 do
+          let loop02 = ref 1 in
+          while !loop02 < 70 do
             draw_string "_";
+            incr loop02;
           done;
 
           let a = ref 380 in
@@ -168,8 +160,10 @@ let _ =
             then begin
               set_color black;
               moveto 0 !a;
-              for loop = 1 to 20 do
+              let loop = ref 1 in
+              while !loop < 70 do
                 draw_string "°";
+                incr loop;
               done;
               a := !a + 10;
               pos := 1;
@@ -177,8 +171,10 @@ let _ =
             else begin
               set_color black;
               moveto 10 !a;
-              for loop = 1 to 20 do
+              let loop = ref 1 in
+              while !loop < 70 do
                 draw_string "°";
+                incr loop;
               done;
               a := !a + 10;
               pos := 0;
