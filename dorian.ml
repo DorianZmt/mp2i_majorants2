@@ -4,6 +4,25 @@ open Graphics
 
 type direction = Gauche | Droite | Haut | Bas
 
+type plateforme = {
+  mutable position : int * int;
+  mutable longueur : int;  
+  mutable visible : bool
+}
+
+let put_plateforme plateforme =
+  let x,y = plateforme.position in
+  moveto x y;
+  if plateforme.visible  
+    then begin
+      let loop = ref 1 in
+      while !loop < plateforme.longueur do
+        draw_string "_";
+        incr loop;
+      done;
+    end
+  
+
 let avance dir x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6=
   match dir with
   | Gauche -> 
@@ -29,29 +48,34 @@ let avance dir x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6=
   | Haut -> 
     if !y1 + 2 < 370
       then begin
-        y1 := !y1 + 2; 
-        y2 := !y2 + 2; 
-        y3 := !y3 + 2; 
-        y4 := !y4 + 2; 
-        y5 := !y5 + 2; 
-        y6 := !y6 + 2;
+        y1 := !y1 + 1; 
+        y2 := !y2 + 1; 
+        y3 := !y3 + 1; 
+        y4 := !y4 + 1; 
+        y5 := !y5 + 1; 
+        y6 := !y6 + 1;
       end;
   | Bas -> 
-    if !y1 - 2 > 237
-      then begin 
-        y1 := !y1 - 2; 
-        y2 := !y2 - 2; 
-        y3 := !y3 - 2; 
-        y4 := !y4 - 2; 
-        y5 := !y5 - 2; 
-        y6 := !y6 - 2;
-      end
+    y1 := !y1 - 1; 
+        y2 := !y2 - 1; 
+        y3 := !y3 - 1; 
+        y4 := !y4 - 1; 
+        y5 := !y5 - 1; 
+        y6 := !y6 - 1
 
-let saut saut_H_bool saut_H_int saut_B_bool =
-  if !saut_H_bool = false && !saut_B_bool = false
+let gravite x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 grav =
+  if point_color !x1 !y6 = white
+    then begin 
+      avance Bas x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6;
+      grav := true
+    end
+    else grav := false
+
+let saut saut_H_bool saut_H_int grav =
+  if !saut_H_bool = false && !grav = false
     then begin
       saut_H_bool := true;
-      saut_H_int := 25
+      saut_H_int := 60
     end
 
 let _ =
@@ -59,23 +83,52 @@ let _ =
 
   (*let bmp = Bmp.load "civ.bmp"[] in*)
   let frame = ref 0 in
-  let t_x = ref 250 in
-  let t_y = ref 237 in
-  let t_x1 = ref 250 in
-  let t_y1 = ref 227 in
+  let t_x = ref 10 in
+  let t_y = ref 270 in
+  let t_x1 = ref 10 in
+  let t_y1 = ref 260 in
 
-	let t_x2 = ref 247 in
-	let t_y2 = ref 227 in 
+	let t_x2 = ref 7 in
+	let t_y2 = ref 260 in 
 
-	let t_x3 = ref 253 in
-	let t_y3 = ref 227 in
+	let t_x3 = ref 13 in
+	let t_y3 = ref 260 in
 
-	let t_x4 = ref 247 in
-	let t_y4 = ref 217 in
+	let t_x4 = ref 7 in
+	let t_y4 = ref 250 in
 
-	let t_x5 = ref 253 in
-	let t_y5 = ref 217 in
+	let t_x5 = ref 13 in
+	let t_y5 = ref 250 in
 
+  let plat1 = {
+    position = (0,100);
+    longueur = 10;
+    visible = true;
+  } in
+
+  let plat2 = {
+    position = (75,150);
+    longueur = 10;
+    visible = true;
+  } in
+
+  let plat3 = {
+    position = (150,200);
+    longueur = 10;
+    visible = true;
+  } in
+
+  let plat4 = {
+    position = (225,250);
+    longueur = 10;
+    visible = true;
+  } in
+
+  let plat5 = {
+    position = (300,300);
+    longueur = 10;
+    visible = true;
+  } in
  
   let running = ref true in
 
@@ -88,10 +141,9 @@ let _ =
   let saut_H_int = ref 0 in
   let saut_H_bool = ref false in
 
-  let saut_B_int = ref 0 in
-  let saut_B_bool = ref false in
+  let grav = ref false in
+
   while !running do
-    clear_graph ();
     incr frame;
 
     if !saut_H_bool = true 
@@ -99,25 +151,13 @@ let _ =
         if !saut_H_int = 0 
           then begin
             saut_H_bool := false;
-            saut_B_bool := true;
-            saut_B_int := 25;
           end
           else begin
             avance Haut t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5;
             saut_H_int := !saut_H_int - 1
           end
       end
-      else if !saut_B_bool = true
-        then begin
-          if !saut_B_int = 0
-            then begin 
-              saut_B_bool := false;
-            end
-            else begin
-              avance Bas t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5;
-              saut_B_int := !saut_B_int - 1
-            end
-        end;
+      else gravite t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5 grav;
         
     if !pages = 1
       then begin
@@ -135,6 +175,11 @@ let _ =
       end
       else begin
           clear_graph ();
+          put_plateforme plat1;
+          put_plateforme plat2;
+          put_plateforme plat3;
+          put_plateforme plat4;
+          put_plateforme plat5;
           set_color black;
         	moveto !t_x !t_y;
 	        draw_string "O";
@@ -149,79 +194,14 @@ let _ =
 	        moveto !t_x5 !t_y5;
 	        draw_string "\\";
 
-          let a = ref 200 in
-          let pos = ref 0 in
-          while !a > 0 do
-            if !pos = 0
-              then begin
-                moveto 0 !a;
-                let loop = ref 1 in
-                while !loop < 70 do
-                  draw_string "°";
-                  incr loop;
-                done;
-                a := !a - 10;
-                pos := 1;
-              end
-              else begin      
-                moveto 10 !a;
-                let loop = ref 1 in
-                while !loop < 70 do
-                  draw_string "°";
-                  incr loop;
-                done;
-                a := !a - 10;
-                pos := 0;
-              end
-          done;
-
-          moveto 0 220;
-          let loop01 = ref 1 in
-          while !loop01 < 70 do
-            draw_string "_";
-            incr loop01;
-          done;
-          moveto 0 380;
-          let loop02 = ref 1 in
-          while !loop02 < 70 do
-            draw_string "_";
-            incr loop02;
-          done;
-
-          let a = ref 380 in
-          let pos = ref 0 in
-          while !a < 500 do
-            if !pos = 0
-            then begin
-              set_color black;
-              moveto 0 !a;
-              let loop = ref 1 in
-              while !loop < 70 do
-                draw_string "°";
-                incr loop;
-              done;
-              a := !a + 10;
-              pos := 1;
-            end
-            else begin
-              set_color black;
-              moveto 10 !a;
-              let loop = ref 1 in
-              while !loop < 70 do
-                draw_string "°";
-                incr loop;
-              done;
-              a := !a + 10;
-              pos := 0;
-            end
-          done;
+          
 
           let process_key c = 
             match c with
             | 'a' -> running := false
             | 'q' -> avance Gauche t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
             | 'd' -> avance Droite t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
-            | 'z' -> saut saut_H_bool saut_H_int saut_B_bool
+            | 'z' -> saut saut_H_bool saut_H_int grav
             | 's' -> avance Bas t_x t_x1 t_x2 t_x3 t_x4 t_x5 t_y t_y1 t_y2 t_y3 t_y4 t_y5
             | _ -> ()
           in
@@ -238,6 +218,6 @@ let _ =
           (* on rafraichit l'écran *)
           synchronize ();
           (* Une attente active si on va trop vite *)
-          Unix.sleepf 0.02
+          Unix.sleepf 0.005
         end;
   done
