@@ -46,22 +46,19 @@ let avance dir x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6=
         x6 := !x6 + 2;
       end;
   | Haut -> 
-    if !y1 + 2 < 370
-      then begin
-        y1 := !y1 + 1; 
-        y2 := !y2 + 1; 
-        y3 := !y3 + 1; 
-        y4 := !y4 + 1; 
-        y5 := !y5 + 1; 
-        y6 := !y6 + 1;
-      end;
+    y1 := !y1 + 1; 
+    y2 := !y2 + 1; 
+    y3 := !y3 + 1; 
+    y4 := !y4 + 1; 
+    y5 := !y5 + 1; 
+    y6 := !y6 + 1;
   | Bas -> 
     y1 := !y1 - 1; 
-        y2 := !y2 - 1; 
-        y3 := !y3 - 1; 
-        y4 := !y4 - 1; 
-        y5 := !y5 - 1; 
-        y6 := !y6 - 1
+    y2 := !y2 - 1; 
+    y3 := !y3 - 1; 
+    y4 := !y4 - 1; 
+    y5 := !y5 - 1; 
+    y6 := !y6 - 1
 
 let gravite x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 grav =
   if point_color !x1 !y6 = white
