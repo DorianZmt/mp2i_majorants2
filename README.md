@@ -1,1 +1,1 @@
-# mp2i_majorants2
+# mp2i_majorants
