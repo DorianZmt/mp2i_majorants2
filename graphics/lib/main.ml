@@ -1,6 +1,22 @@
 open Graphics
 
-let x1,x2,x3,x4,x5,x6,y1,y2,y3,y4,y5,y6 = Affichage.t_x, Affichage.t_x1, Affichage.t_x2, Affichage.t_x3, Affichage.t_x4, Affichage.t_x5, Affichage.t_y, Affichage.t_y1, Affichage.t_y2, Affichage.t_y3, Affichage.t_y4, Affichage.t_y5
+let x1 = ref 10
+let y1 = ref 270
+
+let x2 = ref 10
+let y2 = ref 260
+
+let x3 = ref 7
+let y3 = ref 260 
+
+let x4 = ref 13 
+let y4 = ref 260 
+
+let x5 = ref 7 
+let y5 = ref 250 
+
+let x6 = ref 13 
+let y6 = ref 250 
 
 let start ()= 
   open_graph " 500x500";
