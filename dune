@@ -1,3 +1,0 @@
-(executable
-  (name dorian)
-  (libraries graphics unix))
