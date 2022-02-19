@@ -7,19 +7,19 @@ type plateforme = {
 } 
 
 let plat1 = {
-  position = (0,100);
-  longueur = 10;
+  position = (150,350);
+  longueur = 45;
   visible = true;
 } 
 
 let plat2 = {
-  position = (75,150);
+  position = (375,380);
   longueur = 10;
   visible = true;
 } 
 
 let plat3 = {
-  position = (150,200);
+  position = (250,420);
   longueur = 10;
   visible = true;
 } 
@@ -49,8 +49,25 @@ let put_plateforme plateforme =
       done;
     end
 
+let mouv_plat3 plat dir = 
+  let x,y = plat.position in
+  if !dir = 1
+    then begin
+      if x <= 200
+        then dir := 2
+        else plat.position <- (x-1,y)
+    end
+    else begin
+      if x >= 250
+        then dir := 1
+        else plat.position <- (x+1,y)
+    end
+
+let dir = ref 1
+
 let put_all_plateforme ()=
   clear_graph ();
+  mouv_plat3 plat3 dir;
   put_plateforme plat1;
   put_plateforme plat2;
   put_plateforme plat3;
