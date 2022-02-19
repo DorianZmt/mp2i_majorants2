@@ -1,3 +1,5 @@
+(*zebi*)
+
 open Graphics
 (* L'objectif ici est d'essayer de programmer une boucle de gestion
    des événements sans latence *)
