@@ -3,7 +3,7 @@ open Graphics
 type direction = Gauche | Droite | Haut | Bas
 
 let mort pages x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 = 
-  pages := 3;
+  pages := 4;
   x1 := 430;
   x2 := 430;
   x3 := 427;
@@ -16,6 +16,24 @@ let mort pages x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 =
   y4 := 450;
   y5 := 440;
   y6 := 440
+
+let change_page pages x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 =
+  if !pages = 2 && (!x1 > 500 || !x1 < 0)
+    then begin
+      pages := 3;
+      x1 := 430;
+      x2 := 430;
+      x3 := 427;
+      x4 := 433;
+      x5 := 427;
+      x6 := 433;
+      y1 := 460;
+      y2 := 450;
+      y3 := 450;
+      y4 := 450;
+      y5 := 440;
+      y6 := 440
+    end
 
 let avance dir x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 =
   match dir with
