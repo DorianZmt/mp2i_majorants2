@@ -13,7 +13,7 @@ On a séparé le script en plusieurs parties dans une librairie :
 
 Pour ce premier rendu l'objectif était de rendre un jeu fonctionnel et c'est à notre avis le cas ( mise à part un petit glitch de déplacement, qu'on a pas su régler ). 
 
-### Pour le futur du jeu
+## Pour le futur du jeu
 * On compte créer d'autres obstacles et pièges comme des canons ou encore de la lave.
 * Rajouter une IA pour pouvoir faire des sortes de petit monstres comme dans mario.
 * Pouvoir faire un jeu "infini" avec un script permettant la génération de salles aléatoires.
