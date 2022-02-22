@@ -1,6 +1,6 @@
 # mp2i_majorants
 
-### Détails du jeu
+## Détails du jeu
 
 Pour ce projet, nous avons décider de réaliser un jeu fortement inspiré de Super Marios Bros. 
 
