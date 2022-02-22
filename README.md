@@ -21,6 +21,6 @@ Pour ce premier rendu l'objectif était de rendre un jeu fonctionnel et c'est à
 L'idée pour pouvoir faire des salles aléatoires est de fixer des règles de viabilité de niveau de sorte à ce que le niveau crée soit toujours possible.
 Nous aurions ici besoin de votre aide car mise à part l'idée d'utiliser un critère de sélection sur plusieurs paramètres tel que les obstacles, plateformes ... nous ne savons pas trop comment nous y prendre.
 
-Tokmak Doğukan  Zammut Dorian, Chekroun Mateo. 
+Tokmak Doğukan, Zammut Dorian, Chekroun Mateo. 
 
 ⭐ La Team de dev de Maryo Brous.
