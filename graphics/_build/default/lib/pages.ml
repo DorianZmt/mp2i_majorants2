@@ -54,5 +54,6 @@ let jeu2 x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 saut_H_bool saut_H_int grav running
   Obstacles.put_all_plateforme2 (); (*On initialise la salle*)
   Affichage.spikes ();
   Affichage.tube ();
+  Affichage.canons ();
   Affichage.personnage x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6; (*On initialise le personnage*)
   Deplacements.process_all_keys x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 saut_H_bool saut_H_int grav running (*On initialise l'input du clavier*)

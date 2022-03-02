@@ -6,6 +6,12 @@ type plateforme = {
   mutable visible : bool
 } 
 
+type canon = {
+  mutable pos : int * int;
+  mutable boule1 : int * int;
+  mutable boule2 : int * int
+}
+
 let plat1 = {
   position = (150,350);
   longueur = 45;
@@ -22,6 +28,18 @@ let plat3 = {
   position = (250,420);
   longueur = 10;
   visible = true;
+} 
+
+let canon1 = {
+  pos = (10,380);
+  boule1 = (10,380);
+  boule2 = (-240,380);
+} 
+
+let canon2 = {
+  pos = (0,25);
+  boule1 = (10,25);
+  boule2 = (-240,25);
 } 
 
 let put_plateforme plateforme =
@@ -187,6 +205,45 @@ let spike_cote left nb x y =
         count := !count - 1
       done
     end
+
+let canon canon = 
+  let x,y = canon.pos in
+  set_color black;
+  moveto x y;
+  draw_string "c"
+
+let tire canon = 
+  let x1,y1 = canon.boule1 in
+  let x2,y2 = canon.boule2 in
+  if x1 < 500
+    then begin
+      set_color red;
+      moveto x1 y1;
+      draw_string "o";
+      canon.boule1 <- (x1+2,y1)
+    end
+    else begin
+      canon.boule1 <- (0,y1)
+    end;
+  if x2 < 500
+    then begin
+      set_color red;
+      moveto x2 y2;
+      draw_string "o";
+      canon.boule2 <- (x2+2,y2)
+    end
+    else begin
+      canon.boule2 <- (0,y2)
+    end
+
+let put_canon can =
+  canon can;
+  tire can
+
+let put_all_canons () = 
+  put_canon canon1;
+  put_canon canon2
+
 
 let spike_rules pages x1 x2 x3 x4 x5 x6 y1 y2 y3 y4 y5 y6 = 
   if point_color (!x1 + 13) !y6 = red 

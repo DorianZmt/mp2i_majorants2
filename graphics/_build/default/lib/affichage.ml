@@ -43,3 +43,6 @@ let tube () =
   draw_string "|";
   moveto 8 21;
   draw_string "___"
+
+let canons () = 
+  Obstacles.put_all_canons ()
